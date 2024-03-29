@@ -1,0 +1,38 @@
+version: "3"
+
+tasks:
+  fmt:
+    desc: "Format the project"
+    cmds:
+      - go fmt {{.CLI_ARGS}} ./...
+
+  test:
+    desc: "Runs all unit tests"
+    cmds:
+      - go test -count=1 {{.CLI_ARGS}} ./... # count=1 guarantees that the result is not cached
+
+  test:fast:
+    desc: "Runs fast unit tests"
+    cmds:
+      - go test -short -count=1 {{.CLI_ARGS}} ./...
+
+  test:bench:
+    desc: "Runs benchmarks"
+    dir: ./05_benchmark
+    cmds:
+      - go test -gcflags="-l -m" -bench=. -benchmem {{.CLI_ARGS}}
+
+  doc:
+    desc: |-
+      Runs godoc server on port 6060.
+      Requires having godoc installed.
+      go install golang.org/x/tools/cmd/godoc
+    cmds:
+      - echo "starting godoc on http://localhost:6060/"
+      - godoc -http=:6060
+
+  default:
+    cmds:
+      - task --list-all
+
+

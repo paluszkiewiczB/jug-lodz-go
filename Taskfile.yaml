@@ -1,0 +1,13 @@
+version: "3"
+
+includes:
+  go:
+    taskfile: ./examples/Taskfile.yaml
+    dir: ./examples
+
+tasks:
+  slides:
+    desc: "Run the slides in development mode"
+    cmds:
+      - bunx slidev 
+
